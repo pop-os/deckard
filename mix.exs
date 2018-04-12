@@ -8,22 +8,8 @@ defmodule Deckard.Mixfile do
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix] ++ Mix.compilers,
-      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      aliases: aliases(),
-      deps: deps(),
-      preferred_cli_env: [
-        release: :prod,
-        vcr: :test,
-        "vcr.delete": :test,
-        "vcr.check": :test,
-        "vcr.show": :test,
-      ],
-      dialyzer: [
-        plt_add_deps: :transitive,
-        plt_add_apps: [:mix],
-        ignore_warnings: "dialyzer.ignore-warnings",
-      ],
+      deps: deps()
     ]
   end
 
@@ -31,7 +17,7 @@ defmodule Deckard.Mixfile do
   def application do
     [
       mod: {Deckard, []},
-      extra_applications: [:logger, :runtime_tools],
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -47,14 +33,12 @@ defmodule Deckard.Mixfile do
       {:cowboy,               "~> 1.0"},
       {:exredis,              ">= 0.2.4"},
       {:httpoison,            "~> 0.13"},
-      {:phoenix,              "~> 1.2"},
+      {:phoenix,              "~> 1.3.2"},
 
       # Development and testing dependencies
       {:credo,                "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir,             "~> 0.5.0", only: [:dev, :test], runtime: false},
       {:ex_doc,               "~> 0.14", only: :dev, runtime: false},
-      {:ex_machina,           "~> 2.1", only: :test},
-      {:exvcr,                "~> 0.7", only: :test},
       {:mix_test_watch,       "~> 0.3", only: :dev, runtime: false},
 
       # Deployment dependencies
@@ -62,23 +46,5 @@ defmodule Deckard.Mixfile do
       {:distillery,           "~> 1.5.2", warn_missing: false},
       {:edeliver,             "1.4.5"}, # TODO: unlock this when the $SILENCE bug is fixed
     ]
-  end
-
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to create, migrate and run the seeds file at once:
-  #
-  #     $ mix ecto.setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
-  defp aliases do
-    [
-      "deploy": &deploy/1,
-    ]
-  end
-
-  defp deploy([env]) do
-    Mix.Task.run("edeliver", ["upgrade", env])
-    Mix.Task.reenable("edeliver")
-    Mix.Task.run("edeliver", ["migrate", env])
   end
 end
