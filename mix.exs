@@ -45,6 +45,7 @@ defmodule Deckard.Mixfile do
       # Runtime dependencies
       {:cors_plug,            "~> 1.1"},
       {:cowboy,               "~> 1.0"},
+      {:exredis,              ">= 0.2.4"},
       {:httpoison,            "~> 0.13"},
       {:phoenix,              "~> 1.2"},
 

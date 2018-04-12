@@ -7,7 +7,8 @@ defmodule Deckard do
     import Supervisor.Spec, warn: false
 
     children = [
-      supervisor(Deckard.Endpoint, [])
+      supervisor(Deckard.Endpoint, []),
+      worker(Deckard.Redis, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

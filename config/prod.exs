@@ -20,6 +20,10 @@ config :deckard, Deckard.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Configures the Pop!_OS build info
+config :deckard, Deckard.Build,
+  url: "https://example-cdn.com"
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
