@@ -22,6 +22,14 @@ config :logger, :console, format: "[$level] $message\n"
 # and calculating stacktraces is usually expensive.
 config :phoenix, :stacktrace_depth, 20
 
+config :exredis,
+  host: "localhost",
+  port: 6379,
+  password: "",
+  db: 0,
+  reconnect: :no_reconnect,
+  max_queue: :infinity
+
 ###########################
 # Development only config #
 ###########################
