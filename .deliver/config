@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+APP="deckard" # name of your release
+
+BUILD_HOST="52.37.170.44" # host where to build the release
+BUILD_USER="ubuntu" # local user at build host
+BUILD_AT="/var/builds/$APP" # build directory on build host
+
+# Note that this requires AWS credentials to be set on the standard env variables
+RELEASE_STORE="s3://$AWS_ACCESS_KEY_ID@$AWS_SECRET_ACCESS_KEY:system76-builds/$APP"
+
+DELIVER_TO="/opt" # deploy directory on production hosts
+
+STAGING_HOSTS="nil" # staging / test hosts separated by space
+STAGING_USER="ubuntu" # local user at staging hosts
+
+PRODUCTION_HOSTS="ec2-54-187-143-91.us-west-2.compute.amazonaws.com" # deploy / production hosts separated by space
+PRODUCTION_USER="ubuntu" # local user at deploy hosts
+
+AUTO_VERSION="commit-count+revision+branch-unless-master" # append date and git data to version number
+
+# ECTO_REPOSITORY="Elixir.Hal.Repo"
+
+# We assume that the production server already has an /etc/$APP.conf file that
+# is readable by the deploying user
+post_extract_release_archive() {
+  status "Linking config file"
+  __sync_remote "
+    if [ -e /etc/$APP.conf ]; then
+      ln -s /etc/$APP.conf $DELIVER_TO/$APP/releases/$VERSION/$APP.conf
+    fi
+  "
+}
