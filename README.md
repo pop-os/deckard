@@ -1,7 +1,7 @@
 <div align="center">
   <img src="assets/brand/deckard.png" alt="Deckard from Blade Runner">
   <h1>deckard</h1>
-  <h3>A Pop!_Shop compatible api server</h3>
+  <h3>The Pop!_OS api server</h3>
   <br>
   <br>
 </div>
