@@ -63,6 +63,12 @@ See the moduledoc for `Conform.Schema.Validator` for more details and examples.
       datatype: :integer,
       default: 80,
     ],
+    
+    "build.url": [
+      to: "deckard.Elixir.Deckard.Build.url",
+      doc: "CDN Url for Pop!_OS builds",
+      datatype: :binary,
+    ],
 
     "http.port": [
       to: "deckard.Elixir.Deckard.Endpoint.http.port",

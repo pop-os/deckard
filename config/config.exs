@@ -9,6 +9,10 @@ config :deckard, Deckard.Endpoint,
   secret_key_base: "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz01",
   render_errors: [accepts: ~w(json)]
 
+# Configures the Pop!_OS build info
+config :deckard, Deckard.Build,
+  url: "https://example-cdn.com"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
