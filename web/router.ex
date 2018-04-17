@@ -14,12 +14,12 @@ defmodule Deckard.Router do
     # is terrible.
 
     # The top Pop!_Shop banner
-    get "/newest/project", ShopController, :projects
+    get "/shop/v1/newest/project", ShopController, :projects
 
     # The Pop!_Shop recently updated carousel
-    get "/newest/release", ShopController, :releases
+    get "/shop/v1/newest/release", ShopController, :releases
 
     # This is the Pop!_Shop trending carousel
-    get "/newest/downloads", ShopController, :downloads
+    get "/shop/v1/newest/downloads", ShopController, :downloads
   end
 end
