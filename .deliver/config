@@ -26,7 +26,7 @@ AUTO_VERSION="commit-count+revision+branch-unless-master" # append date and git 
 post_extract_release_archive() {
   status "Linking config file"
   __sync_remote "
-    if [ -e /etc/$APP.conf ]; then
+    if [ -e /etc/$APP.conf ] && [ ! -f $DELIVER_TO/$APP/releases/$VERSION/$APP.conf ]; then
       ln -s /etc/$APP.conf $DELIVER_TO/$APP/releases/$VERSION/$APP.conf
     fi
   "
