@@ -7,7 +7,7 @@ defmodule Deckard.ShopView do
         "telegramdesktop",
         "meld",
         "org.gnome.Builder",
-        "steam",
+        "com.steampowered.steam",
         "mattermost-desktop",
         "code",
         "spotify",
