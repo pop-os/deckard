@@ -3,8 +3,8 @@ defmodule Deckard.BuildController do
 
   alias Deckard.Build
 
-  def show(conn, %{"id" => channel}) do
-    case Build.find(channel) do
+  def show(conn, %{"version" => version, "channel" => channel}) do
+    case Build.find(version, channel) do
       {:error, :not_found} ->
         conn
         |> send_resp(:not_found, "")

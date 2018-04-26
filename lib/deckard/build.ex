@@ -1,10 +1,10 @@
 defmodule Deckard.Build do
   alias Deckard.Redis
 
-  defstruct [:channel, :version, :sha_sum, :size, :url]
+  defstruct [:channel, :build, :version, :sha_sum, :size, :url]
 
-  def find (channel) do
-    case Redis.query(["HGETALL", redis_key(channel)]) do
+  def find(version, channel) do
+    case Redis.query(["HGETALL", redis_key(version, channel)]) do
       [] ->
         {:error, :not_found}
 
@@ -17,10 +17,11 @@ defmodule Deckard.Build do
         try do
           release = %__MODULE__{
             channel: channel,
-            version: String.to_integer(data["version"]),
+            build: data["build_version"],
+            version: data["distro_version"],
             sha_sum: data["sha_sum"],
             size: String.to_integer(data["byte_size"]),
-            url: build_url(channel, data["version"])
+            url: build_url(data["path"])
           }
 
           {:ok, release}
@@ -30,10 +31,15 @@ defmodule Deckard.Build do
     end
   end
 
-  defp redis_key(nil), do: "pop_release"
-  defp redis_key(channel), do: "pop_release:#{channel}"
+  defp redis_key(version, channel) do
+    if version == "17.10" do
+      "pop_release:#{channel}"
+    else
+      "pop_release:#{version}_amd64_#{channel}"
+    end
+  end
 
-  defp build_url(channel, version) do
-    Application.get_env(:deckard, __MODULE__)[:url] <> "/#{channel}/#{version}/pop-os_amd64_#{channel}_#{version}.iso"
+  defp build_url(path) do
+    Application.get_env(:deckard, __MODULE__)[:url] <> path
   end
 end
