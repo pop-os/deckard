@@ -2,11 +2,21 @@ defmodule Deckard.ShopView do
   def render("projects.json", _assigns) do
     %{
       data: [
+        "atom",
+        "slack",
         "telegramdesktop",
         "meld",
         "org.gnome.Builder",
+        "steam",
+        "mattermost-desktop",
+        "code",
+        "spotify",
         "com.gexperts.Tilix",
-        "virt-manager"
+        "com.uploadedlobster.peek",
+        "virt-manager",
+        "signal-desktop",
+        "cura",
+        "chromium-browser"
       ]
     }
   end
