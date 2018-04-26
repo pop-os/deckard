@@ -8,7 +8,7 @@ defmodule Deckard.Router do
   scope "/", Deckard do
     pipe_through :api
 
-    get "/builds/:version/:channel", BuildController, only: [:show]
+    get "/builds/:version/:channel", BuildController, :show
 
     # TODO: houston v2 and deckard need to get a better URL naming scheme. This
     # is terrible.
