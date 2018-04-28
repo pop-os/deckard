@@ -40,6 +40,6 @@ defmodule Deckard.Build do
   end
 
   defp build_url(path) do
-    Application.get_env(:deckard, __MODULE__)[:url] <> path
+    Application.get_env(:deckard, __MODULE__)[:url] <> "/" <> path
   end
 end
