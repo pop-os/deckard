@@ -40,6 +40,21 @@ defmodule Deckard.Build do
   end
 
   defp build_url(path) do
-    Application.get_env(:deckard, __MODULE__)[:url] <> "/" <> path
+    root_url =
+      :deckard
+      |> Application.get_env(__MODULE__)
+      |> Map.get(:url)
+      |> String.trim()
+      |> String.trim("/")
+
+    # Past versions were stored in a nested folder. When we moved ISOs to their
+    # own bucket, we made it top level.
+    file_path =
+      path
+      |> String.trim()
+      |> String.trim("/")
+      |> String.replace_suffix("pop-os/iso", "")
+
+    root_url <> "/" <> file_path
   end
 end
