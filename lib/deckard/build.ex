@@ -43,7 +43,7 @@ defmodule Deckard.Build do
     root_url =
       :deckard
       |> Application.get_env(__MODULE__)
-      |> Map.get(:url)
+      |> Keyword.get(:url, "")
       |> String.trim()
       |> String.trim("/")
 
