@@ -9,6 +9,7 @@ defmodule Deckard.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -42,9 +43,27 @@ defmodule Deckard.Mixfile do
       {:mix_test_watch,       "~> 0.3", only: :dev, runtime: false},
 
       # Deployment dependencies
-      {:conform,              "~> 2.5"},
-      {:distillery,           "~> 1.5.2", warn_missing: false},
-      {:edeliver,             "1.4.5"}, # TODO: unlock this when the $SILENCE bug is fixed
+      {:distillery,           "~> 2.0.12"},
+      {:edeliver,             "~> 1.6.0"},
+      {:toml,                 "~> 0.5.2"},
     ]
+  end
+
+  # Aliases are shortcuts or tasks specific to the current project.
+  # For example, to create, migrate and run the seeds file at once:
+  #
+  #     $ mix ecto.setup
+  #
+  # See the documentation for `Mix` for more info on aliases.
+  defp aliases do
+    [
+      deploy: &deploy/1,
+    ]
+  end
+
+  defp deploy([env]) do
+    Mix.Task.run("edeliver", ["upgrade", env])
+    Mix.Task.reenable("edeliver")
+    Mix.Task.run("edeliver", ["migrate", env])
   end
 end

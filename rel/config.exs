@@ -49,5 +49,7 @@ release :deckard do
   set applications: [
     :runtime_tools
   ]
-  plugin Conform.ReleasePlugin
+  set config_providers: [
+    {Toml.Provider, [path: "/etc/deckard.toml", transforms: []]}
+  ]
 end
