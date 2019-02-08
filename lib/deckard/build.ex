@@ -53,7 +53,7 @@ defmodule Deckard.Build do
       path
       |> String.trim()
       |> String.trim("/")
-      |> String.replace_prefix("pop-os/iso", "")
+      |> String.replace_prefix("pop-os/iso/", "")
 
     root_url <> "/" <> file_path
   end
