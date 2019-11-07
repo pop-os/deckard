@@ -22,7 +22,7 @@ defmodule Deckard.Build do
             sha_sum: data["sha_sum"],
             size: String.to_integer(data["byte_size"]),
             url: build_url(data["path"]),
-            urgent: Keyword.get(data, "urgent", false)
+            urgent: Map.get(data, "urgent", false)
           }
 
           {:ok, release}
