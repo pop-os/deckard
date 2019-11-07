@@ -6,7 +6,8 @@ defmodule Deckard.BuildView do
       version: build.version,
       sha_sum: build.sha_sum,
       size: build.size,
-      url: build.url
+      url: build.url,
+      urgent: build.urgent
     }
   end
 end
