@@ -1,7 +1,7 @@
 defmodule Deckard.Build do
   alias Deckard.Redis
 
-  defstruct [:channel, :build, :version, :sha_sum, :size, :url]
+  defstruct [:channel, :build, :version, :sha_sum, :size, :url, :urgent]
 
   def find(version, channel) do
     case Redis.query(["HGETALL", redis_key(version, channel)]) do
