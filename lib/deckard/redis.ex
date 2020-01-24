@@ -17,9 +17,9 @@ defmodule Deckard.Redis do
   # GenServer Implementation #
   ############################
 
-  def init(_state), do: Exredis.start_link
+  def init(_state), do: Exredis.start_link()
 
-  def terminate(_reason, conn), do: Exredis.stop conn
+  def terminate(_reason, conn), do: Exredis.stop(conn)
 
   def handle_call({:query, cmd}, _from, conn) do
     res = Exredis.query(conn, cmd)

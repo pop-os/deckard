@@ -10,8 +10,7 @@ config :deckard, Deckard.Endpoint,
   render_errors: [accepts: ~w(json)]
 
 # Configures the Pop!_OS build info
-config :deckard, Deckard.Build,
-  url: "https://example-cdn.com"
+config :deckard, Deckard.Build, url: "https://example-cdn.com"
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -19,9 +18,8 @@ config :logger, :console,
   metadata: [:request_id]
 
 # Configures the Pop!_OS build info
-config :deckard, Deckard.Build,
-  url: "http://localhost"
+config :deckard, Deckard.Build, url: "http://localhost"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

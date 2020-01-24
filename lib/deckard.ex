@@ -8,7 +8,7 @@ defmodule Deckard do
 
     children = [
       supervisor(Deckard.Endpoint, []),
-      worker(Deckard.Redis, []),
+      worker(Deckard.Redis, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

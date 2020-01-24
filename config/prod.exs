@@ -61,6 +61,8 @@ config :logger, level: :info
 # which should be versioned separately.
 try do
   import_config "prod.secret.exs"
-rescue Code.LoadError ->
-  :no_op # Conform will fill these at runtime
+rescue
+  Code.LoadError ->
+    # Conform will fill these at runtime
+    :no_op
 end
