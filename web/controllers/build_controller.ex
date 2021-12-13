@@ -5,7 +5,7 @@ defmodule Deckard.BuildController do
 
   def show(conn, %{"version" => version, "channel" => channel} = params) do
     arch = Map.get(params, "arch", "amd64")
-    case Build.find(arch, version, channel) do
+    case Build.find(version, arch, channel) do
       {:error, :not_found} ->
         conn
         |> send_resp(:not_found, "")
