@@ -3,8 +3,8 @@ defmodule Deckard.Build do
 
   defstruct [:channel, :build, :version, :sha_sum, :size, :url, :urgent]
 
-  def find(version, channel) do
-    case Redis.query(["HGETALL", redis_key(version, channel)]) do
+  def find(version, arch, channel) do
+    case Redis.query(["HGETALL", redis_key(version, arch, channel)]) do
       [] ->
         {:error, :not_found}
 
@@ -32,13 +32,8 @@ defmodule Deckard.Build do
     end
   end
 
-  defp redis_key(version, channel) do
-    if version == "17.10" do
-      "pop_release:#{channel}"
-    else
-      "pop_release:#{version}_amd64_#{channel}"
-    end
-  end
+  defp redis_key("17.10", _arch, channel), do: "pop_release:#{channel}"
+  defp redis_key(version, arch, channel), do: "pop_release:#{version}_#{arch}_#{channel}"
 
   defp build_url(path) do
     root_url =
