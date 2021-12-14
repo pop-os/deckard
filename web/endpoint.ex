@@ -5,6 +5,11 @@ defmodule Deckard.Endpoint do
     plug Phoenix.CodeReloader
   end
 
+  plug Plug.Parsers,
+    parsers: [:urlencoded, :multipart, :json],
+    pass: ["*/*"],
+    json_decoder: Jason
+
   plug Plug.Logger
   plug CORSPlug
 
