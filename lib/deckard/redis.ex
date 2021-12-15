@@ -1,29 +1,35 @@
 defmodule Deckard.Redis do
-  use GenServer
+  @moduledoc """
+  Handles Redis connection to get builds information.
+  """
 
-  ################
-  # External API #
-  ################
-
-  def start_link(state \\ nil) do
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+  def child_spec(args) do
+    %{
+      id: Deckard.Redis,
+      start: {Deckard.Redis, :start_link, [args]}
+    }
   end
 
-  def query(cmd) do
-    GenServer.call(__MODULE__, {:query, cmd})
+  def start_link(opts) do
+    Redix.start_link(opts)
   end
 
-  ############################
-  # GenServer Implementation #
-  ############################
+  def h_getall(key) do
+    pid()
+    |> Redix.command(["HGETALL", key])
+    |> case do
+      {:ok, value} -> {:ok, normalize(value)}
+      {:error, error} -> error
+    end
+  end
 
-  def init(_state), do: Exredis.start_link
+  def pid do
+    :deckard_builds
+  end
 
-  def terminate(_reason, conn), do: Exredis.stop conn
-
-  def handle_call({:query, cmd}, _from, conn) do
-    res = Exredis.query(conn, cmd)
-
-    {:reply, res, conn}
+  defp normalize(raw_data) do
+    raw_data
+    |> Enum.chunk_every(2)
+    |> Map.new(fn [k, v] -> {k, v} end)
   end
 end
