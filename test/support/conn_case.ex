@@ -24,7 +24,8 @@ defmodule Deckard.ConnCase do
 
   @dialyzer {:no_return, __ex_unit_setup_0: 1}
   setup do
-    conn = Phoenix.ConnTest.build_conn()
+    conn =
+      Phoenix.ConnTest.build_conn()
       |> Plug.Conn.put_req_header("accept", "application/json")
 
     {:ok, conn: conn}
