@@ -3,15 +3,16 @@ defmodule Deckard do
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
+  @impl true
   def start(_type, _args) do
-    import Supervisor.Spec, warn: false
+    redis_options = Application.get_env(:deckard, :redis_options, [])
 
     children = [
-      supervisor(Deckard.Endpoint, []),
-      worker(Deckard.Redis, []),
+      Deckard.Endpoint,
+      {Deckard.Redis, [{:name, Deckard.Redis.pid()} | redis_options]}
     ]
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Deckard.Supervisor]
     Supervisor.start_link(children, opts)
@@ -19,6 +20,7 @@ defmodule Deckard do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     Deckard.Endpoint.config_change(changed, removed)
     :ok
