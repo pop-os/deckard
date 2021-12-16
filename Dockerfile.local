@@ -1,0 +1,45 @@
+FROM elixir:1.12.3-alpine AS builder
+
+RUN apk add --no-cache git openssh-client
+
+WORKDIR /tmp/deckard
+
+ADD mix.exs .
+ADD mix.lock .
+
+RUN mix local.hex --force && \
+  mix local.rebar --force && \
+  MIX_ENV=prod mix deps.get && \
+  MIX_ENV=prod mix deps.compile
+
+# Do not copy _build or it will break the container build
+COPY config ./config
+COPY lib ./lib
+COPY rel ./rel
+
+RUN MIX_ENV=prod mix release
+
+FROM alpine:3.12
+
+RUN apk update && \
+  apk add --no-cache \
+  git \
+  bash \
+  libgcc \
+  libstdc++ \
+  ca-certificates \
+  ncurses-libs \
+  openssl
+
+RUN addgroup -S deckard && adduser -S deckard -G deckard
+
+COPY --from=builder /tmp/deckard/_build/prod/rel/deckard ./
+
+RUN chown -R deckard:deckard bin/deckard releases/
+RUN chown -R deckard:deckard `ls | grep 'erts-'`/
+
+USER deckard
+
+EXPOSE 4000
+
+CMD [ "bin/deckard", "start" ]
