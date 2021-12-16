@@ -1,0 +1,9 @@
+*
+
+!_build/
+
+!config/
+!lib/
+!rel/
+!mix.exs
+!mix.lock
