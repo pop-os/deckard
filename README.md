@@ -1,28 +1,56 @@
-<div align="center">
-  <img src="assets/brand/deckard.png" alt="Deckard from Blade Runner">
-  <h1>deckard</h1>
-  <h3>The Pop!_OS api server</h3>
-  <br>
-  <br>
-</div>
+# Deckard
 
----
+![Deckard from Blade Runner](assets/brand/deckard.png?raw=true)
 
-This is a basic Phoenix app. You will need elixir `1.5` or higher to run. Once
-cloned, simply:
+## The Pop!_OS api server
 
-  1. Install dependencies with `mix deps.get`
-  2. Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  3. Start Phoenix endpoint with `mix phoenix.server`
+### Requirements
+
+- Redis server.
+- Erlang/OTP and Elixir. See [.tool-versions](.tool-versions) for all the required tool versions.
+
+#### Redis
+
+The easiest approach is to run Redis using Docker compose, like:
+
+```shell
+docker-compose up -d
+```
+
+### Initial setup
+
+Install the required language versions, if using [asdf](https://asdf-vm.com/), just run:
+
+```shell
+asdf install
+```
+
+Then download the dependencies and compile the app:
+
+```shell
+mix do deps.get, compile
+```
+
+### Running the application locally
+
+You can run Deckard in interactive mode with:
+
+```shell
+iex -S mix
+```
 
 You can now visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+### Testing
 
-## Learn more
+```shell
+mix test
+```
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+To produce coverage reports for tests, run:
+
+```shell
+mix coveralls.html
+```
+
+Now you can view the report in `cover/excoveralls.html`.

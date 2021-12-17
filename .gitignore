@@ -1,12 +1,10 @@
 # App artifacts
+/cover
 /_build
 /db
 /deps
 /*.ez
 /doc
-
-# Build artifacts
-.deliver/releases
 
 # Generate on crash by the VM
 erl_crash.dump
